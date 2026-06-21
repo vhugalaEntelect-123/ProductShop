@@ -2,6 +2,7 @@ package za.co.entelect.java_devcamp_product_shop.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.*;
 
@@ -17,7 +18,6 @@ public class Order {
     @Column(name = "order_id")
     private Long orderId;
 
-    //todo : The customerId is a foreign key from another service
     @Column(name = "customer_id", nullable = false)
     private Long customerId;
 
@@ -30,6 +30,6 @@ public class Order {
     @Column(name = "contract_url", columnDefinition = "TEXT")
     private String contractUrl;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private List<OrderItem> orderItems;
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderItem> orderItems = new ArrayList<>();
 }

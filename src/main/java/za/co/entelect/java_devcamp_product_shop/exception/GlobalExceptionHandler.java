@@ -57,6 +57,19 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
     }
 
+    @ExceptionHandler(CustomerNotEligibleException.class)
+    public ResponseEntity<ErrorResponse> handleCustomerNotEligibleException(CustomerNotEligibleException ex) {
+
+        ErrorResponse error = new ErrorResponse(
+                HttpStatus.FORBIDDEN.value(),
+                "Customer not eligible",
+                ex.getMessage(),
+                LocalDateTime.now()
+        );
+
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
+    }
+
     @ExceptionHandler(CustomerServiceException.class)
     public ResponseEntity<ErrorResponse> handleCustomerServiceException(
             CustomerServiceException ex) {

@@ -15,7 +15,6 @@ public class QualifyingAccount {
     @Column(name = "qualifying_accounts_id")
     private Long qualifyingAccountsId;
 
-    //ToDo : This should be a Foreign Key
     @Column(name = "account_id", nullable = false)
     private Long accountId;
 
