@@ -1,5 +1,6 @@
 package za.co.entelect.java_devcamp_product_shop.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,19 +10,13 @@ import za.co.entelect.java_devcamp_product_shop.service.ProductService;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
 
     private final ProductService productService;
 
-
-    public ProductController(ProductService productService) {
-        this.productService = productService;
-    }
-
-
-    //GET /api/products
     @GetMapping
     public ResponseEntity<List<ProductDTO>> getAllProducts() {
         List<ProductDTO> products = productService.getAllProducts();

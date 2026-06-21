@@ -13,11 +13,6 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    // 1. Search for products containing a specific keyword in their name (Case-Insensitive)
-    List<Product> findByNameContainingIgnoreCase(String name);
-
-
-    //JPQL Query: Fetch a product and eagerly load its fulfillment details to avoid N+1 query problems
     @Query("SELECT p FROM Product p LEFT JOIN FETCH p.fulfilmentType WHERE p.productId = :productId")
     Product findProductWithFulfilment(@Param("productId") Long productId);
 
