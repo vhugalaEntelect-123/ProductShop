@@ -5,12 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestClient;
-import za.co.entelect.java_devcamp_product_shop.dto.CustomerRequestDTO;
-import za.co.entelect.java_devcamp_product_shop.dto.CustomerResponseDTO;
-import za.co.entelect.java_devcamp_product_shop.dto.UserProfileRequestDTO;
-import za.co.entelect.java_devcamp_product_shop.dto.UserProfileResponseDTO;
+import za.co.entelect.java_devcamp_product_shop.dto.*;
 import za.co.entelect.java_devcamp_product_shop.entity.UserProfile;
 import za.co.entelect.java_devcamp_product_shop.exception.UserAlreadyExistsException;
 import za.co.entelect.java_devcamp_product_shop.mapper.CustomerMapper;
@@ -27,6 +22,7 @@ public class UserProfileService {
     private final CustomerMapper customerMapper;
     private final PasswordEncoder passwordEncoder;
     private final CustomerService customerService;
+    private final CustomerService customerClient;
 
     public UserProfileResponseDTO registerUser(UserProfileRequestDTO request) {
 
@@ -48,6 +44,23 @@ public class UserProfileService {
                 userProfile.getUsername(),
                 "Registration successful"
         );
+    }
+
+    public ProfileResponseDTO getUserProfileById(Long customerId) {
+        CustomerEligibilityResponseDTO customer = customerClient.getCustomerById(customerId);
+
+        return customerMapper.toUserProfileResponseDTO(customer);
+    }
+
+    public CustomerEligibilityResponseDTO getUserProfileByUsername(String username) {
+        log.info("Fetching user profile for username: {}", username);
+        
+        UserProfile userProfile = userProfileRepository.findByUsername(username);
+        if (userProfile == null) {
+            throw new RuntimeException("User not found with username: " + username);
+        }
+
+        return customerClient.getCustomerById(userProfile.getId());
     }
 
 }

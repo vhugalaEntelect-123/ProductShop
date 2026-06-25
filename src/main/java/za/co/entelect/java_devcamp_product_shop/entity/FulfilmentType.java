@@ -20,8 +20,5 @@ public class FulfilmentType {
 
     @Column(columnDefinition = "TEXT")
     private String description;
-
-   /* @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id", nullable = false)
-    private Product product;*/
+    
 }

@@ -1,5 +1,6 @@
 package za.co.entelect.java_devcamp_product_shop.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,15 +10,13 @@ import org.springframework.web.bind.annotation.RestController;
 import za.co.entelect.java_devcamp_product_shop.dto.TakeUpProductResponseDTO;
 import za.co.entelect.java_devcamp_product_shop.service.TakeUpProductService;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/products")
 public class TakeUpProductController {
 
     private final TakeUpProductService takeUpProductService;
 
-    public TakeUpProductController(TakeUpProductService takeUpProductService) {
-        this.takeUpProductService = takeUpProductService;
-    }
 
     @PostMapping("/{productId}/take-up/{customerId}")
     public ResponseEntity<TakeUpProductResponseDTO> takeUpProduct(

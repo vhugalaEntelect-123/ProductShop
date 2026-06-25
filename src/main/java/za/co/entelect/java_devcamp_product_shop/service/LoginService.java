@@ -20,21 +20,18 @@ public class LoginService {
 
     public LoginResponseDTO login(LoginRequestDTO request) {
 
-        // 1. Check if user exists
+
         UserProfile userProfile = userProfileRepository.findByUsername(request.username());
         if (userProfile == null) {
             throw new UserNotFoundException("User not found");
         }
 
-        // 2. Check if password matches
         if (!passwordEncoder.matches(request.password(), userProfile.getPassword())) {
             throw new InvalidCredentialsException("Invalid credentials");
         }
 
-        // 3. Generate token
        String token = jwtService.generateToken(userProfile.getUsername());
 
-        // 4. Return response
         return new LoginResponseDTO(token);
     }
 }

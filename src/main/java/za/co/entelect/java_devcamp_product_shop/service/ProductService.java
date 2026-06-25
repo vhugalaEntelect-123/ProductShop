@@ -41,7 +41,7 @@ public class ProductService {
     public ProductDetailDTO getProductById(Long id) {
         log.info("Fetching product details for ID: {}", id);
 
-        Product product = productRepository.findProductWithFulfilment(id);
+        Product product = productRepository.findByProductId(id);
         if (product == null) {
             log.warn("Product lookup failed for ID: {}", id);
             throw new EntityNotFoundException("Product not found with ID: " + id);
@@ -60,7 +60,7 @@ public class ProductService {
             throw new IllegalArgumentException("Fulfilment type name cannot be empty");
         }
 
-        List<Product> products = productRepository.findProductsByFulfilmentTypeName(fulfilmentName);
+        List<Product> products = productRepository.findByFulfilmentTypeNameIgnoreCase(fulfilmentName);
         log.debug("Found {} products matching fulfilment type: {}", products.size(), fulfilmentName);
 
         if (products.isEmpty()) {

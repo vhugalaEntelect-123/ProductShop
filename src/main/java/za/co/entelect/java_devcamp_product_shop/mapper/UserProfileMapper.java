@@ -8,4 +8,5 @@ import za.co.entelect.java_devcamp_product_shop.entity.UserProfile;
 public interface UserProfileMapper {
 
     UserProfile toEntity(UserProfileRequestDTO dto);
+
 }
