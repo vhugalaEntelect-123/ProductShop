@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import za.co.entelect.java_devcamp_product_shop.dto.CustomerResponseDTO;
 import za.co.entelect.java_devcamp_product_shop.dto.EligibilityResponseDTO;
 import za.co.entelect.java_devcamp_product_shop.dto.TakeUpProductResponseDTO;
 import za.co.entelect.java_devcamp_product_shop.entity.Order;
@@ -23,13 +24,14 @@ import java.time.LocalDateTime;
 public class TakeUpProductService {
 
     private final EligibilityService eligibilityService;
-    private final ProductRepository productRepository;
-    private final OrderRepository orderRepository;
-    private final OrderItemRepository orderItemRepository;
-
+    private final OrderService orderService;
+    private final CustomerService customerService;
 
     @Transactional
-    public TakeUpProductResponseDTO takeUpProduct(Long productId, Long customerId) {
+    public TakeUpProductResponseDTO takeUpProduct(Long productId, String emailAddress) {
+
+        CustomerResponseDTO customerResponse = customerService.getCustomerByEmail(emailAddress);
+        Long customerId = customerResponse.id();
 
         log.info("Take up product requested. productId={}, customerId={}", productId, customerId);
 
@@ -37,31 +39,23 @@ public class TakeUpProductService {
                 eligibilityService.checkEligibility(productId, customerId);
 
         if (!eligibility.eligible()) {
+            log.warn(
+                    "Take up product rejected. customerId={}, productId={}, reason={}",
+                    customerId,
+                    productId,
+                    eligibility.reason()
+            );
+
             throw new CustomerNotEligibleException(eligibility.reason());
         }
 
-        Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new ResourceNotFoundException("Product not found with id: " + productId));
-
-        Order order = new Order();
-        order.setCustomerId(customerId);
-        order.setStatus("PENDING");
-        order.setCreatedAt(LocalDateTime.now());
-        order.setContractUrl(null);
-
-        OrderItem orderItem = new OrderItem();
-        orderItem.setOrder(order);
-        orderItem.setProduct(product);
-
-        order.getOrderItems().add(orderItem);
-
-        Order savedOrder = orderRepository.save(order);
+        Order savedOrder = orderService.createPendingOrder(customerId, productId);
 
         return new TakeUpProductResponseDTO(
                 savedOrder.getOrderId(),
                 customerId,
                 productId,
-                "PENDING",
+                savedOrder.getStatus(),
                 "Product take-up request created successfully"
         );
     }

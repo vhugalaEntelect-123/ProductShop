@@ -12,6 +12,7 @@ import za.co.entelect.java_devcamp_product_shop.dto.CustomerRequestDTO;
 import za.co.entelect.java_devcamp_product_shop.dto.CustomerResponseDTO;
 import za.co.entelect.java_devcamp_product_shop.exception.CustomerServiceException;
 import za.co.entelect.java_devcamp_product_shop.exception.ResourceNotFoundException;
+import za.co.entelect.java_devcamp_product_shop.security.TokenService;
 
 @Slf4j
 @Service

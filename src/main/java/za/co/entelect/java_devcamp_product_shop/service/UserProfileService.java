@@ -46,11 +46,7 @@ public class UserProfileService {
         );
     }
 
-    public ProfileResponseDTO getUserProfileById(Long customerId) {
-        CustomerEligibilityResponseDTO customer = customerClient.getCustomerById(customerId);
 
-        return customerMapper.toUserProfileResponseDTO(customer);
-    }
 
     public CustomerEligibilityResponseDTO getUserProfileByUsername(String username) {
         log.info("Fetching user profile for username: {}", username);

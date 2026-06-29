@@ -1,4 +1,4 @@
-package za.co.entelect.java_devcamp_product_shop.service;
+package za.co.entelect.java_devcamp_product_shop.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

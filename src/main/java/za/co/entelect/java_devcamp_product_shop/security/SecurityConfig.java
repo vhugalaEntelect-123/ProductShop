@@ -35,7 +35,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
 
                         // protect take-up endpoint
-                        .requestMatchers(HttpMethod.POST, "/api/products/*/take-up/*").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/api/products/*/take-up").authenticated()
 
                         // protect anything else
                         .anyRequest().authenticated()

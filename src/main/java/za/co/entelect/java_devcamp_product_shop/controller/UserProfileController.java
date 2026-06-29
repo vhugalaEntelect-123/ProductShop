@@ -30,7 +30,7 @@ public class UserProfileController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/current")
+    @GetMapping("/me")
     public ResponseEntity<CustomerEligibilityResponseDTO> getUserProfile() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();

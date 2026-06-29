@@ -9,6 +9,7 @@ import za.co.entelect.java_devcamp_product_shop.entity.UserProfile;
 import za.co.entelect.java_devcamp_product_shop.exception.InvalidCredentialsException;
 import za.co.entelect.java_devcamp_product_shop.exception.UserNotFoundException;
 import za.co.entelect.java_devcamp_product_shop.repository.UserProfileRepository;
+import za.co.entelect.java_devcamp_product_shop.security.JwtService;
 
 @Service
 @RequiredArgsConstructor

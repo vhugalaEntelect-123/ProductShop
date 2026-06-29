@@ -1,6 +1,4 @@
-package za.co.entelect.java_devcamp_product_shop.service;
-
-import lombok.RequiredArgsConstructor;
+package za.co.entelect.java_devcamp_product_shop.security;
 
 
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -9,9 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClient;
-import za.co.entelect.java_devcamp_product_shop.dto.TokenResponseDTO;
 
-import java.util.Base64;
 @Service
 //@RequiredArgsConstructor
 public class TokenService {
